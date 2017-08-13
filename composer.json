@@ -1,16 +1,18 @@
 {
-    "minimum-stability": "dev",
-    "require": {
-        "aoepeople/composer-installers": "*",
-        "ecomdev/ecomdev_phpunit": "dev-dev"
-    },
-    "config": {
-        "bin-dir": "bin"
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/ambimax/EcomDev_PHPUnit.git"
-        }
-    ]
+  "minimum-stability": "dev",
+  "require": {
+    "aoepeople/composer-installers": "*",
+    "ecomdev/ecomdev_phpunit": "dev-dev",
+    "ambimax/coding-standards": "v1.*",
+    "ambimax/magento-deployscripts": "1.2.*"
+  },
+  "config": {
+    "bin-dir": "bin"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/ambimax/EcomDev_PHPUnit.git"
+    }
+  ]
 }
