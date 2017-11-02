@@ -31,6 +31,16 @@ BUILDENV=`mktemp -d /tmp/mageteststand.XXXXXXXX`
 echo "Cloning ${MAGETESTSTAND_URL} to ${BUILDENV}"
 git clone "${MAGETESTSTAND_URL}" "${BUILDENV}"
 cp -rf "${WORKSPACE}" "${BUILDENV}/.modman/"
+
+# if module came with own dependencies that were installed, use these:
+if [ -d "${WORKSPACE}/vendor" ] ; then
+  cp -f ${WORKSPACE}/composer.lock "${BUILDENV}/"
+  cp -rf ${WORKSPACE}/vendor "${BUILDENV}/"
+fi
+if [ -d "${WORKSPACE}/.modman" ] ; then
+  cp -rf ${WORKSPACE}/.modman/* "${BUILDENV}/.modman/"
+fi
+
 ${BUILDENV}/install.sh
 if [ -d "${WORKSPACE}/vendor" ] ; then
   cp -rf ${WORKSPACE}/vendor/* "${BUILDENV}/vendor/"
