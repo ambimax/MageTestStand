@@ -43,5 +43,10 @@ fi
 
 ${BUILDENV}/install.sh
 
+PHPUNIT=${BUILDENV}/bin/phpunit
+if [ ! -f $PHPUNIT ]; then
+    PHPUNIT=${BUILDENV}/vendor/bin/phpunit
+fi
+
 cd ${BUILDENV}/htdocs
-${BUILDENV}/vendor/bin/phpunit --colors -d display_errors=1
+${PHPUNIT} --colors -d display_errors=1
