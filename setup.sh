@@ -47,7 +47,7 @@ export BUILDENV=${BUILDENV}
 
 step "Cloning ${MAGETESTSTAND_URL} to ${BUILDENV}"
 git clone "${MAGETESTSTAND_URL}" "${BUILDENV}" || error_exit "Cloning MageTestStand failed"
-(cd ${BUILDENV} && tools/composer.phar install || error_exit "MageTestStand composer install failed"
+(cd ${BUILDENV} && tools/composer.phar install) || error_exit "MageTestStand composer install failed"
 
 step "Copy module to build environment"
 cp -rf "${WORKSPACE}" "${BUILDENV}/.modman/" || error_exit "Cannot copy module to build environment"
