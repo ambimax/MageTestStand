@@ -22,7 +22,7 @@ function cleanup {
 }
 
 function step {
-    echo "${GREEN}$1${NC}"
+    echo -e "${GREEN}$1${NC}"
 }
 trap cleanup EXIT
 
@@ -47,6 +47,7 @@ export BUILDENV=${BUILDENV}
 
 step "Cloning ${MAGETESTSTAND_URL} to ${BUILDENV}"
 git clone "${MAGETESTSTAND_URL}" "${BUILDENV}" || error_exit "Cloning MageTestStand failed"
+(cd ${BUILDENV} && tools/composer.phar install || error_exit "MageTestStand composer install failed"
 
 step "Copy module to build environment"
 cp -rf "${WORKSPACE}" "${BUILDENV}/.modman/" || error_exit "Cannot copy module to build environment"
@@ -62,9 +63,9 @@ if [ -f composer.json ]; then
 fi
 
 step "Copy module dependencies to build environment"
-if [ -f "${WORKSPACE}/composer.lock" ] ; then
-  cp -f ${WORKSPACE}/composer.lock "${BUILDENV}/" || error_exit "Cannot copy composer.lock to build environment"
-fi
+#if [ -f "${WORKSPACE}/composer.lock" ] ; then
+#  cp -f ${WORKSPACE}/composer.lock "${BUILDENV}/" || error_exit "Cannot copy composer.lock to build environment"
+#fi
 
 if [ -d "${WORKSPACE}/vendor" ] ; then
   cp -rf ${WORKSPACE}/vendor "${BUILDENV}/" || error_exit "Cannot copy vendor folder to build environment"
