@@ -50,3 +50,5 @@ fi
 
 cd ${BUILDENV}/htdocs
 ${PHPUNIT} --colors -d display_errors=1
+
+export BUILDENV=${BUILDENV}
