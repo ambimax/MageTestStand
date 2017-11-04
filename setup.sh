@@ -30,19 +30,6 @@ if [ -z $MAGETESTSTAND_URL ] ; then
     MAGETESTSTAND_URL="https://github.com/AOEpeople/MageTestStand.git"
 fi
 
-echo
-echo "Run lint tests"
-echo "------------------------------------------------"
-tools/xmllint.sh .modman/ || error_exit "XML lint test failed"
-tools/phplinit.sh .modman/ || error_exit "PHP lint test failed"
-
-echo
-echo "Install composer dependencies"
-echo "------------------------------------------------"
-if [ -f composer.json ]; then
-    tools/composer.phar require aoepeople/composer-installers:* || error_exit "Unable to install composer installers"
-    tools/composer.phar install --dev --no-interaction || error_exit "Composer install failed"
-fi
 
 echo
 echo "Create build environment"
@@ -51,6 +38,20 @@ BUILDENV=`mktemp -d /tmp/mageteststand.XXXXXXXX`
 
 echo "Cloning ${MAGETESTSTAND_URL} to ${BUILDENV}"
 git clone "${MAGETESTSTAND_URL}" "${BUILDENV}" || error_exit "Cloning MageTestStand failed"
+
+echo
+echo "Run lint tests"
+echo "------------------------------------------------"
+${BUILDENV}/tools/xmllint.sh .modman/ || error_exit "XML lint test failed"
+${BUILDENV}/tools/phplinit.sh .modman/ || error_exit "PHP lint test failed"
+
+echo
+echo "Install composer dependencies"
+echo "------------------------------------------------"
+if [ -f composer.json ]; then
+    ${BUILDENV}/tools/composer.phar require aoepeople/composer-installers:* || error_exit "Unable to install composer installers"
+    ${BUILDENV}/tools/composer.phar install --dev --no-interaction || error_exit "Composer install failed"
+fi
 
 echo
 echo "Copy module and dependencies to build environment"
