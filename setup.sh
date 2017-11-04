@@ -3,8 +3,8 @@ set -e
 set -x
  
 function error_exit {
-	echo "$1" 1>&2
-	exit 1
+    echo "$1" 1>&2
+    exit 1
 }
 
 function cleanup {
@@ -35,15 +35,21 @@ echo
 echo "Create build environment"
 echo "------------------------------------------------"
 BUILDENV=`mktemp -d /tmp/mageteststand.XXXXXXXX`
+export BUILDENV=${BUILDENV}
 
 echo "Cloning ${MAGETESTSTAND_URL} to ${BUILDENV}"
 git clone "${MAGETESTSTAND_URL}" "${BUILDENV}" || error_exit "Cloning MageTestStand failed"
 
 echo
+echo "Copy module to build environment"
+echo "------------------------------------------------"
+cp -rf "${WORKSPACE}" "${BUILDENV}/.modman/" || error_exit "Cannot copy module to build environment"
+
+echo
 echo "Run lint tests"
 echo "------------------------------------------------"
-${BUILDENV}/tools/xmllint.sh .modman/ || error_exit "XML lint test failed"
-${BUILDENV}/tools/phplinit.sh .modman/ || error_exit "PHP lint test failed"
+${BUILDENV}/tools/xmllint.sh "${WORKSPACE}" || error_exit "XML lint test failed"
+${BUILDENV}/tools/phplinit.sh "${WORKSPACE}" || error_exit "PHP lint test failed"
 
 echo
 echo "Install composer dependencies"
@@ -54,12 +60,13 @@ if [ -f composer.json ]; then
 fi
 
 echo
-echo "Copy module and dependencies to build environment"
+echo "Copy module dependencies to build environment"
 echo "------------------------------------------------"
-cp -rf "${WORKSPACE}" "${BUILDENV}/.modman/" || error_exit "Cannot copy module to build environment"
+if [ -f "${WORKSPACE}/composer.lock" ] ; then
+  cp -f ${WORKSPACE}/composer.lock "${BUILDENV}/" || error_exit "Cannot copy composer.lock to build environment"
+fi
 
 if [ -d "${WORKSPACE}/vendor" ] ; then
-  cp -f ${WORKSPACE}/composer.lock "${BUILDENV}/" || error_exit "Cannot copy composer.lock to build environment"
   cp -rf ${WORKSPACE}/vendor "${BUILDENV}/" || error_exit "Cannot copy vendor folder to build environment"
 fi
 
