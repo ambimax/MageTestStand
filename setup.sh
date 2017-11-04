@@ -10,13 +10,13 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 function error_exit {
-    echo "${RED}$1${NC}" 1>&2
+    echo -e "${RED}$1${NC}" 1>&2
     exit 1
 }
 
 function cleanup {
   if [ -z $SKIP_CLEANUP ]; then
-    echo "Removing build directory ${BUILDENV}"
+    step "Removing build directory ${BUILDENV}"
     rm -rf "${BUILDENV}"
   fi
 }
@@ -32,8 +32,7 @@ if [ ! -z $TRAVIS_BUILD_DIR ] ; then
 fi
 
 if [ -z $WORKSPACE ] ; then
-  echo "No workspace configured, please set your WORKSPACE environment"
-  exit 1
+  error_exit "No workspace configured, please set your WORKSPACE environment"
 fi
 
 if [ -z $MAGETESTSTAND_URL ] ; then
