@@ -42,11 +42,10 @@ fi
 
 step "Create build environment"
 BUILDENV=`mktemp -d /tmp/mageteststand.XXXXXXXX`
-export BUILDENV=${BUILDENV}
 
 step "Cloning ${MAGETESTSTAND_URL} to ${BUILDENV}"
 git clone "${MAGETESTSTAND_URL}" "${BUILDENV}" || error_exit "Cloning MageTestStand failed"
-(cd ${BUILDENV} && tools/composer.phar install --dev --no-interaction) || error_exit "MageTestStand composer install failed"
+(cd ${BUILDENV} && tools/composer.phar install --no-interaction) || error_exit "MageTestStand composer install failed"
 
 step "Copy module to build environment"
 cp -rf "${WORKSPACE}" "${BUILDENV}/.modman/" || error_exit "Cannot copy module to build environment"
@@ -55,17 +54,13 @@ step "Run lint tests"
 ${BUILDENV}/tools/xmllint.sh "${WORKSPACE}" || error_exit "XML lint test failed"
 ${BUILDENV}/tools/phplint.sh "${WORKSPACE}" || error_exit "PHP lint test failed"
 
-step "Install composer dependencies"
+step "Install module dependencies (composer)"
 if [ -f composer.json ]; then
     ${BUILDENV}/tools/composer.phar require aoepeople/composer-installers:* || error_exit "Unable to install composer installers"
-    ${BUILDENV}/tools/composer.phar install --dev --no-interaction || error_exit "Composer install failed"
+    ${BUILDENV}/tools/composer.phar install --no-interaction || error_exit "Composer install failed"
 fi
 
 step "Copy module dependencies to build environment"
-#if [ -f "${WORKSPACE}/composer.lock" ] ; then
-#  cp -f ${WORKSPACE}/composer.lock "${BUILDENV}/" || error_exit "Cannot copy composer.lock to build environment"
-#fi
-
 if [ -d "${WORKSPACE}/vendor" ] ; then
   cp -rf ${WORKSPACE}/vendor "${BUILDENV}/" || error_exit "Cannot copy vendor folder to build environment"
 fi
