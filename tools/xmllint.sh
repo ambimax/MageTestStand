@@ -40,4 +40,4 @@ else
     done
 fi
 
-echo "No syntax errors detected in $1"
+echo "No XML syntax errors detected in $1"

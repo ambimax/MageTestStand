@@ -27,4 +27,4 @@ for i in $FILES; do
     echo $md5 >> $TMP_FILE
 done
 
-echo "No syntax errors detected in $1"
+echo "No PHP syntax errors detected in $1"
