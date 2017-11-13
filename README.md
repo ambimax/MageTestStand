@@ -104,6 +104,24 @@ export MAGENTO_DB_NAME=somename
 curl -sSL https://raw.githubusercontent.com/AOEpeople/MageTestStand/master/setup.sh | bash
 ```
 
+## XMLLint
+
+To ignore specific directories or files add a `.xmllint_ignore` file to your repository
+
+```
+./modman/app/code/community/Aoe_*
+./modman/app/code/core/*
+```
+
+## PHPLint
+
+To ignore specific directories or files add a `.phplint_ignore` file to your repository
+
+```
+./modman/app/code/community/Aoe_*
+./modman/app/code/core/*
+```
+
 ## CodeSniffer
 
 To ignore specific directories or files add a `.phpcs_ignore` file to your repository

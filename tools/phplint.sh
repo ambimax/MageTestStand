@@ -12,7 +12,8 @@ fi
 # Run in parallel:
 # find -L $1 \( -name '*.php' -o -name '*.phtml' \) -print0 | xargs -0 -n 1 -P 20 php -l
 
-FILES=`find $1 -type f \( -name '*.php' -o -name '*.phtml' \)`
+PHPLINT_IGNORE=`printf "! -ipath %s " $(find . -type f -name '.xmllint_ignore' | xargs cat)`
+FILES=`find $1 -type f \( -name '*.php' -o -name '*.phtml' \) $PHPLINT_IGNORE`
 
 TMP_FILE=/tmp/phplint.tmp
 touch $TMP_FILE;

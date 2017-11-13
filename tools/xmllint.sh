@@ -13,7 +13,8 @@ command_exists () {
     type "$1" &> /dev/null ;
 }
 
-FILES=`find $1 -type f -name "*.xml"`
+XMLLINT_IGNORE=`printf "! -ipath %s " $(find . -type f -name '.xmllint_ignore' | xargs cat)`
+FILES=`find $1 -type f -name "*.xml" $XMLLINT_IGNORE`
 
 TMP_FILE=/tmp/xmllint.tmp
 touch $TMP_FILE;
