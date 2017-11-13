@@ -1,6 +1,6 @@
 <?php
 
-class Ambimax_GoogleTagManager_Test_Config_Main extends EcomDev_PHPUnit_Test_Case_Config
+class MageTestStand_Test_Test_Config_Main extends EcomDev_PHPUnit_Test_Case_Config
 {
     public function testModuleActive()
     {

@@ -25,7 +25,7 @@ addons:
   mariadb: '10.1'
 
 before_install:
-  - cp -rf travis .modman/
+  - mv travis .modman/
   - composer config --global github-oauth.github.com "$GITHUB_TOKEN"
 
 script:
