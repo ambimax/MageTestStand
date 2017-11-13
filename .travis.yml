@@ -31,6 +31,10 @@ before_install:
 script:
   - ./setup.sh
 
+after_success:
+  - (cd /tmp/mageteststand.*/ && bin/phpunit --version)
+  - (cd /tmp/mageteststand.*/ && vendor/squizlabs/php_codesniffer/scripts/phpcs --version)
+
 after_failure:
   - ls -lah /tmp/mageteststand.*/
   - ls -lah /tmp/mageteststand.*/.modman/
@@ -40,6 +44,7 @@ after_failure:
   - ls -lah /tmp/mageteststand.*/vendor/squizlabs/
   - ls -lah /tmp/mageteststand.*/bin/
   - (cd /tmp/mageteststand.*/ && bin/phpunit --version)
+  - (cd /tmp/mageteststand.*/ && vendor/squizlabs/php_codesniffer/scripts/phpcs --version)
 
 notifications:
   slack: ambimax:2MlPTX9bY9aPxCPhJGxHKIT6
