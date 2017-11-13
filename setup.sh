@@ -53,7 +53,11 @@ cp -rf "${WORKSPACE}" "${BUILDENV}/.modman/" || error_exit "Cannot copy module t
 step "Run lint tests"
 ${BUILDENV}/tools/xmllint.sh "${WORKSPACE}" || error_exit "XML lint test failed"
 ${BUILDENV}/tools/phplint.sh "${WORKSPACE}" || error_exit "PHP lint test failed"
-${BUILDENV}/vendor/squizlabs/php_codesniffer/scripts/phpcs --standard=${BUILDENV}/vendor/zifius/magizendo/Magento1/ruleset.xml ${WORKSPACE} || error_exit "CodeSniffer test failed"
+
+step "Run codesniffer tests"
+PHPCS_IGNORE=$(find . -type f -name '.phpcs_ignore' | xargs cat | paste -s -d, -)
+echo "Files to be ignored: ${PHPCS_IGNORE}"
+${BUILDENV}/vendor/squizlabs/php_codesniffer/scripts/phpcs --standard=${BUILDENV}/vendor/zifius/magizendo/Magento1/ruleset.xml --ignore="${PHPCS_IGNORE}" ${WORKSPACE} || error_exit "CodeSniffer test failed"
 
 step "Install module dependencies (composer)"
 if [ -f composer.json ]; then

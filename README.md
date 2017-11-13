@@ -1,5 +1,7 @@
 # MageTestStand
 
+[![Master Branch](https://travis-ci.org/ambimax/MageTestStand.png?branch=master)](https://travis-ci.org/ambimax/MageTestStand)
+
 This tool is used to build a minimal Magento environment that allows to run PHPUnit tests for a Magento module on Travis CI.
 
 It uses following tools:
@@ -100,6 +102,15 @@ export MAGENTO_DB_NAME=somename
 - Run MageTestStand:
 ```
 curl -sSL https://raw.githubusercontent.com/AOEpeople/MageTestStand/master/setup.sh | bash
+```
+
+## CodeSniffer
+
+To ignore specific directories or files add a `.phpcs_ignore` file to your repository
+
+```
+app/code/community/Aoe_*
+app/code/core/*
 ```
 
 ## Misc

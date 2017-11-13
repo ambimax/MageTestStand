@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <MageTestStand_Test>
+            <version>1.0.0</version>
+        </MageTestStand_Test>
+    </modules>
+    <global>
+        <helpers>
+            <mageteststand_test>
+                <class>MageTestStand_Test_Helper</class>
+            </mageteststand_test>
+        </helpers>
+    </global>
+    <phpunit>
+        <suite>
+            <modules>
+                <MageTestStand_Test/>
+            </modules>
+        </suite>
+    </phpunit>
+</config>
