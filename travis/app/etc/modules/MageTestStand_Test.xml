@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <MageTestStand_Test>
+            <active>true</active>
+            <codePool>community</codePool>
+        </MageTestStand_Test>
+    </modules>
+</config>

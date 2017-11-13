@@ -1,0 +1,45 @@
+language: php
+sudo: false
+
+php:
+  - 5.6
+  - 7.0
+#  - 7.1
+
+env:
+  global:
+    - MAGENTO_DB_ALLOWSAME=1
+    - SKIP_CLEANUP=1
+    - MAGETESTSTAND_URL=https://github.com/ambimax/MageTestStand.git
+    - secure: "W6F5f8ajbAjcTzKt1TFj09XijyJPgwt3+Jv6R7HBRgkMGtGzOcM2S0SRyJZaz39pko9YatxDapnfl/sSNJUhbl/qaCUO0IcwhnxtEdYvqsX2+4s9HqZenUjXaiyxYQPZNPn2Z26u4L0zwDPkJ8Enedq1F4eoVm3prnbJks9DJ5OL/CcAXdwbzuajU25me4WszbTmZoMSYQPdyogEKZvLSdrYPdkTq+vXqeCVOfS8+ALmO9VNVu31qr/tjJ75QrHbGqMpi+3SVvKSqXJXwVzHgH7wvYvVhj6rzDfWLRsIbv5L+he++xN26kEfHtAgFH+M3LifTVNsO8DdwdmSbL81Niz1Of56CdMZeyNMzvtmXC3xugohor1YpxYfpaEQwDknpEnqPYL1Nqa5ZKGCmF6bGNsGvX4+YekcCkpbMKKpD+4fK1sm8TU/t5Kef48zUUCYbLazdIVTTkMbkJ0icENvX5p5Qo3+EOJ51Zz3mjDbapy/gDk15/LsSDa/xk9p1WaJV34N7EJixHG15EZoLdR4WSoPbeYxaekhtwvlo7bzQwOhFpZa9I9q6lB/HADQn65Aoi5lzFLRYhHe9w64cO9b5U6VTWeHbDLIjJkfk+nHmMVxLnn69yFVMjzovIm3S0gew1hpSxtsnOfeR4RS/tfCDzaBx9FgkkX5ds/mujas1Zc="
+
+  matrix:
+    - MAGENTO_VERSION=magento-mirror-1.9.3.6
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - php: 7.1
+
+addons:
+  mariadb: '10.1'
+
+before_install:
+  - cp -rf travis .modman/
+  - composer config --global github-oauth.github.com "$GITHUB_TOKEN"
+
+script:
+  - ./setup.sh
+
+after_failure:
+  - ls -lah /tmp/mageteststand.*/
+  - ls -lah /tmp/mageteststand.*/.modman/
+  - ls -lah /tmp/mageteststand.*/.modman/*/
+  - ls -lah /tmp/mageteststand.*/htdocs/
+  - ls -lah /tmp/mageteststand.*/vendor/
+  - ls -lah /tmp/mageteststand.*/vendor/squizlabs/
+  - ls -lah /tmp/mageteststand.*/bin/
+  - (cd /tmp/mageteststand.*/ && bin/phpunit --version)
+
+notifications:
+  slack: ambimax:2MlPTX9bY9aPxCPhJGxHKIT6
