@@ -1,0 +1,2 @@
+.modman/Aoe_TestSetup/lib/aoe_testsetup/PHPUnit_VerboseResultPrinter.php
+travis/phpcs/wrong-formatted.php

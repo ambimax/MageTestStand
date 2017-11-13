@@ -25,10 +25,12 @@ addons:
   mariadb: '10.1'
 
 before_install:
-  - mv travis .modman/
+  - mv travis/phpunit .modman/travis-phpunit
   - composer config --global github-oauth.github.com "$GITHUB_TOKEN"
 
 script:
+  - tools/xmllint.sh travis/xmllint
+  - tools/phplint.sh travis/phplint
   - ./setup.sh
 
 after_success:
