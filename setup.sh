@@ -55,9 +55,9 @@ ${BUILDENV}/tools/xmllint.sh "${WORKSPACE}" || error_exit "XML lint test failed"
 ${BUILDENV}/tools/phplint.sh "${WORKSPACE}" || error_exit "PHP lint test failed"
 
 step "Run codesniffer tests"
-PHPCS_IGNORE=$(find . -type f -name '.phpcs_ignore' | xargs cat | paste -s -d, -)
-echo "Files to be ignored: ${PHPCS_IGNORE}"
-${BUILDENV}/vendor/squizlabs/php_codesniffer/scripts/phpcs --standard=${BUILDENV}/vendor/zifius/magizendo/Magento1/ruleset.xml --ignore="${PHPCS_IGNORE}" ${WORKSPACE} || error_exit "CodeSniffer test failed"
+#PHPCS_IGNORE=$(find . -type f -name '.phpcs_ignore' | xargs cat | paste -s -d, -)
+#echo "Files to be ignored: ${PHPCS_IGNORE}"
+#${BUILDENV}/vendor/squizlabs/php_codesniffer/scripts/phpcs --standard=${BUILDENV}/vendor/zifius/magizendo/Magento1/ruleset.xml --ignore="${PHPCS_IGNORE}" ${WORKSPACE} || error_exit "CodeSniffer test failed"
 
 step "Install module dependencies (composer)"
 if [ -f composer.json ]; then
@@ -78,7 +78,7 @@ step "Install Magento"
 ${BUILDENV}/install.sh || error_exit "Magento installation failed"
 
 step "Run Unit Tests"
-PHPUNIT=${BUILDENV}/bin/phpunit
+PHPUNIT=${BUILDENV}/tools/phpunit.phar
 if [ ! -f $PHPUNIT ]; then
     PHPUNIT=${BUILDENV}/vendor/bin/phpunit
 fi
