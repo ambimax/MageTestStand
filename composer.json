@@ -12,9 +12,13 @@
     "bin-dir": "bin"
   },
   "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/ambimax/EcomDev_PHPUnit.git"
-    }
-  ]
+        {
+            "type": "composer",
+            "url": "https://packages.firegento.com"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/AOEpeople/EcomDev_PHPUnit.git"
+        }
+    ]
 }
