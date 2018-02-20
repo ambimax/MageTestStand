@@ -5,20 +5,19 @@
   "require": {
     "aoepeople/composer-installers": "*",
     "ambimax/ecomdev_phpunit": "dev-master",
-    "ambimax/coding-standards": "v1.*",
-    "ambimax/magento-deployscripts": "1.2.*"
+    "ambimax/coding-standards": "v1.*"
   },
   "config": {
     "bin-dir": "bin"
   },
   "repositories": [
-        {
+    {
             "type": "composer",
             "url": "https://packages.firegento.com"
         },
-        {
-            "type": "vcs",
-            "url": "https://github.com/AOEpeople/EcomDev_PHPUnit.git"
-        }
-    ]
+    {
+      "type": "vcs",
+      "url": "https://github.com/ambimax/EcomDev_PHPUnit.git"
+    }
+  ]
 }
