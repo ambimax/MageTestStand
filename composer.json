@@ -4,7 +4,7 @@
   "minimum-stability": "dev",
   "require": {
     "aoepeople/composer-installers": "*",
-    "ecomdev/ecomdev_phpunit": "dev-dev",
+    "ambimax/ecomdev_phpunit": "dev-dev",
     "ambimax/coding-standards": "v1.*",
     "ambimax/magento-deployscripts": "1.2.*"
   },
